@@ -1,0 +1,132 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SityCard from "../components/SityCard.astro";
+import { sities } from "../data/experiments";
+
+// Get unique categories and sort them alphabetically
+const allCategories = Array.from(
+    new Set(sities.flatMap((s) => s.categories)),
+).sort();
+---
+
+<BaseLayout title="Curiousite | Sities">
+    <div class="mb-12 transition-colors duration-200">
+        <h1 class="text-3xl font-semibold text-accent mb-4">
+            <span class="text-fg-muted">Curio-</span>Sities
+        </h1>
+        <p class="text-fg-muted">
+            A collection of curiousities: exploring mathematics, art, and
+            everything in between.
+        </p>
+    </div>
+
+    <div
+        class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8"
+    >
+        <div class="flex flex-wrap gap-2" id="category-filters">
+            <button
+                class="filter-btn active px-3 py-1.5 text-sm font-medium rounded-lg bg-accent text-bg-primary transition-colors cursor-pointer"
+                data-category="all"
+            >
+                All
+            </button>
+            {
+                allCategories.map((cat) => (
+                    <button
+                        class="filter-btn px-3 py-1.5 text-sm font-medium rounded-lg bg-bg-tertiary text-fg-muted hover:opacity-70 transition-colors cursor-pointer"
+                        data-category={cat}
+                    >
+                        {cat.charAt(0).toUpperCase() + cat.slice(1)}
+                    </button>
+                ))
+            }
+        </div>
+
+        <div class="flex items-center gap-2">
+            <span class="text-sm font-medium text-fg-muted">Sort by:</span>
+            <select
+                id="sort-select"
+                class="px-3 py-1.5 text-sm font-medium rounded-lg bg-bg-tertiary text-fg-muted border-none outline-none cursor-pointer hover:opacity-70 transition-colors focus:ring-2 focus:ring-border-subtle appearance-none"
+                style="background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23737373%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E'); background-repeat: no-repeat; background-position: right 0.7rem top 50%; background-size: 0.65rem auto; padding-right: 2rem;"
+            >
+                <option value="latest">Latest</option>
+                <option value="oldest">Oldest</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" id="sities-grid">
+        {
+            sities.map((sity) => (
+                <SityCard
+                    title={sity.title}
+                    description={sity.description}
+                    href={sity.href}
+                    date={sity.date}
+                    categories={sity.categories}
+                />
+            ))
+        }
+    </div>
+
+    <script>
+        const filterBtns = document.querySelectorAll(".filter-btn");
+        const sortSelect = document.getElementById(
+            "sort-select",
+        ) as HTMLSelectElement;
+        const grid = document.getElementById("sities-grid");
+        const cards = Array.from(
+            document.querySelectorAll(".sity-card"),
+        ) as HTMLElement[];
+
+        let currentCategory = "all";
+        let currentSort = "latest";
+
+        function renderCards() {
+            // Filter by category
+            const filtered = cards.filter((card) => {
+                if (currentCategory === "all") return true;
+                const categories = card.dataset.categories?.split(",") || [];
+                return categories.includes(currentCategory);
+            });
+
+            // Sort by date dataset property
+            filtered.sort((a, b) => {
+                const dateA = new Date(a.dataset.date || "").getTime();
+                const dateB = new Date(b.dataset.date || "").getTime();
+                return currentSort === "latest" ? dateB - dateA : dateA - dateB;
+            });
+
+            if (grid) {
+                grid.innerHTML = "";
+                filtered.forEach((card) => grid.appendChild(card));
+            }
+        }
+
+        // Bind event listeners for filter buttons
+        filterBtns.forEach((btn) => {
+            btn.addEventListener("click", (e) => {
+                const target = e.currentTarget as HTMLButtonElement;
+
+                filterBtns.forEach((b) => {
+                    b.classList.remove("bg-accent", "text-bg-primary");
+                    b.classList.add("bg-bg-tertiary", "text-fg-muted");
+                });
+                target.classList.remove("bg-bg-tertiary", "text-fg-muted");
+                target.classList.add("bg-accent", "text-bg-primary");
+
+                currentCategory = target.dataset.category || "all";
+                renderCards();
+            });
+        });
+
+        if (sortSelect) {
+            sortSelect.addEventListener("change", (e) => {
+                currentSort = (e.target as HTMLSelectElement).value;
+                renderCards();
+            });
+        }
+
+        renderCards();
+    </script>
+</BaseLayout>

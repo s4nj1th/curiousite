@@ -1,0 +1,27 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PiScroller from "../components/PiScroller.astro";
+---
+
+<BaseLayout title="Infinite Pi | Curiousite">
+    <div class="mb-8 transition-colors duration-200">
+        <h1 class="text-3xl font-semibold text-accent mb-2">
+            Infinite π Scroll
+        </h1>
+        <p class="text-fg-muted text-sm">
+            Scroll down to continuously load and reveal the endless digits of
+            Pi.
+        </p>
+    </div>
+
+    <div
+        class="w-full rounded-xl border border-border-subtle bg-bg-secondary p-6 sm:p-8 min-h-[50vh] transition-colors duration-200"
+    >
+        <div
+            class="text-lg sm:text-xl font-mono text-fg-primary leading-relaxed font-light break-all tracking-wider text-right mx-auto"
+        >
+            <span class="text-accent font-semibold text-4xl">3.</span
+            ><PiScroller />
+        </div>
+    </div>
+</BaseLayout>

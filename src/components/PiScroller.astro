@@ -1,0 +1,89 @@
+<span id="pi" class="inline"></span>
+
+<script>
+    const container = document.getElementById("pi");
+
+    let position = 0;
+    const CHUNK = 1000;
+    let loading = false;
+
+    async function loadChunk() {
+        if (loading || !container) return;
+        loading = true;
+
+        const start = position;
+        const end = position + CHUNK - 1;
+
+        try {
+            const res = await fetch("/pi/pi.txt", {
+                headers: {
+                    Range: `bytes=${start}-${end}`,
+                },
+            });
+
+            if (!res.ok && res.status !== 206) {
+                throw new Error(`Failed to fetch chunk: ${res.status}`);
+            }
+
+            const text = await res.text();
+            if (!text) {
+                loading = false;
+                return;
+            }
+
+            const span = document.createElement("span");
+            span.textContent = text.trim().replace(/\n/g, "");
+
+            container.appendChild(span);
+
+            position += CHUNK;
+        } catch (err) {
+            console.error("Error loading Pi chunk:", err);
+        } finally {
+            loading = false;
+        }
+    }
+
+    window.addEventListener("keydown", (e) => {
+        if (
+            e.key === "End" ||
+            e.key === "PageDown" ||
+            (e.metaKey && e.key === "ArrowDown")
+        ) {
+            e.preventDefault();
+        }
+    });
+
+    let lastScrollTop = window.scrollY;
+
+    window.addEventListener("scroll", () => {
+        const currentScrollTop = window.scrollY;
+
+        // Prevent massive jumps via scrollbar dragging
+        if (currentScrollTop - lastScrollTop > 2000) {
+            window.scrollTo(0, lastScrollTop + 2000);
+            return;
+        }
+
+        lastScrollTop = currentScrollTop;
+
+        const bottom =
+            window.innerHeight + window.scrollY >=
+            document.body.offsetHeight - 800;
+        if (bottom) loadChunk();
+    });
+
+    // Load initial chunks
+    loadChunk().then(() => loadChunk());
+</script>
+
+<style>
+    /* Hide the scrollbar entirely to prevent dragging */
+    body {
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none; /* Firefox */
+    }
+    body::-webkit-scrollbar {
+        display: none; /* Chrome, Safari and Opera */
+    }
+</style>

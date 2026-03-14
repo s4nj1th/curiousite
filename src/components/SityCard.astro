@@ -1,0 +1,39 @@
+---
+interface Props {
+    title: string;
+    description: string;
+    href: string;
+    date: string;
+    categories: string[];
+}
+
+const { title, description, href, date, categories } = Astro.props;
+---
+
+<a
+    href={href}
+    class="sity-card block p-6 rounded-xl border border-border-subtle bg-bg-secondary hover:bg-bg-primary transition-colors duration-200"
+    data-categories={categories.join(",")}
+    data-date={date}
+>
+    <div class="flex items-start justify-between mb-2">
+        <h2 class="text-xl font-medium text-accent">
+            {title}
+        </h2>
+        <span class="text-xs text-fg-muted font-mono tracking-wider">
+            {date}
+        </span>
+    </div>
+    <p class="text-sm text-fg-muted mb-4">
+        {description}
+    </p>
+    <div class="flex flex-wrap gap-2">
+        {
+            categories.map((cat) => (
+                <span class="px-2 py-1 text-xs font-medium rounded-md bg-bg-tertiary text-fg-muted border border-border-subtle transition-colors">
+                    {cat}
+                </span>
+            ))
+        }
+    </div>
+</a>

@@ -1,0 +1,43 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+    --color-bg-primary: var(--bg-primary);
+    --color-bg-secondary: var(--bg-secondary);
+    --color-bg-tertiary: var(--bg-tertiary);
+    --color-fg-primary: var(--fg-primary);
+    --color-fg-muted: var(--fg-muted);
+    --color-border-subtle: var(--border-subtle);
+    --color-accent: var(--accent);
+    --color-selection-bg: var(--selection-bg);
+    --color-selection-fg: var(--selection-fg);
+}
+
+:root {
+    --bg-primary: var(--color-neutral-50);
+    --bg-secondary: var(--color-white);
+    --bg-tertiary: var(--color-neutral-100);
+    --fg-primary: var(--color-neutral-900);
+    --fg-muted: var(--color-neutral-500);
+    --border-subtle: var(--color-neutral-200);
+    --accent: var(--color-neutral-900);
+    --selection-bg: var(--color-neutral-200);
+    --selection-fg: var(--color-black);
+}
+
+.dark {
+    --bg-primary: var(--color-neutral-950);
+    --bg-secondary: color-mix(
+        in srgb,
+        var(--color-neutral-900) 50%,
+        transparent
+    );
+    --bg-tertiary: var(--color-neutral-900);
+    --fg-primary: var(--color-neutral-300);
+    --fg-muted: var(--color-neutral-400);
+    --border-subtle: var(--color-neutral-800);
+    --accent: var(--color-white);
+    --selection-bg: var(--color-neutral-800);
+    --selection-fg: var(--color-white);
+}

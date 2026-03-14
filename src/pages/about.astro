@@ -1,0 +1,65 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="About | Curiousite">
+    <div class="mb-12 transition-colors duration-200">
+        <h1 class="text-3xl font-semibold text-accent mb-4">
+            About Curiousite
+        </h1>
+        <p class="text-fg-muted">The story behind the experiments.</p>
+    </div>
+
+    <div
+        class="space-y-6 text-fg-primary leading-relaxed font-light transition-colors duration-200"
+    >
+        <p>
+            Curiousite was created as a playground to visualize interesting
+            mathematical concepts and algorithms in the browser. It combines
+            minimal design with computational heavy-lifting to present infinite
+            structures in a digestible format.
+        </p>
+
+        <div
+            class="h-px w-full bg-border-subtle my-8 transition-colors duration-200"
+        >
+        </div>
+
+        <h2 class="text-xl font-medium text-accent">The Stack</h2>
+        <ul class="list-disc list-inside space-y-2 text-fg-muted">
+            <li>
+                Framework: <a
+                    href="https://astro.build/"
+                    target="_blank"
+                    class="text-fg-primary hover:opacity-70 underline decoration-border-subtle underline-offset-4 transition-colors"
+                    >Astro</a
+                >
+            </li>
+            <li>
+                Styling: <a
+                    href="https://tailwindcss.com/"
+                    target="_blank"
+                    class="text-fg-primary hover:opacity-70 underline decoration-border-subtle underline-offset-4 transition-colors"
+                    >Tailwind CSS v4</a
+                >
+            </li>
+            <li>Deployment: Static HTML</li>
+        </ul>
+
+        <div
+            class="h-px w-full bg-border-subtle my-8 transition-colors duration-200"
+        >
+        </div>
+
+        <h2 class="text-xl font-medium text-accent">The Author</h2>
+        <p>
+            Built and maintained by <a
+                href="https://github.com/s4nj1th"
+                target="_blank"
+                class="text-fg-primary hover:opacity-70 underline decoration-border-subtle underline-offset-4 transition-colors"
+                >s4nj1th</a
+            >. If you find these experiments interesting, feel free to explore
+            the source code on GitHub.
+        </p>
+    </div>
+</BaseLayout>

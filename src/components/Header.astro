@@ -1,0 +1,24 @@
+---
+import ThemeToggle from "./ThemeToggle.astro";
+---
+
+<header
+    class="border-b border-border-subtle bg-bg-primary transition-colors duration-200"
+>
+    <div class="max-w-4xl mx-auto px-6 py-6 flex items-center justify-between">
+        <a
+            href="/"
+            class="text-2xl font-semibold text-accent hover:opacity-70 transition-colors"
+        >
+            Curiousite.
+        </a>
+        <nav class="flex items-center gap-6">
+            <a
+                href="/about"
+                class="text-sm font-medium text-fg-muted hover:text-accent transition-colors"
+                >About</a
+            >
+            <ThemeToggle />
+        </nav>
+    </div>
+</header>
