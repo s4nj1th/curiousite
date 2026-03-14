@@ -15,7 +15,7 @@
         const end = position + CHUNK - 1;
 
         try {
-            const res = await fetch("/pi/pi.txt", {
+            const res = await fetch("https://github.com/s4nj1th/curiousite/releases/download/v1/pi.txt", {
                 headers: {
                     Range: `bytes=${start}-${end}`,
                 },
