@@ -1,0 +1,28 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PretextPlayground from "../components/PretextPlayground.astro";
+---
+
+<BaseLayout title="Pretext Playground | Curiousite">
+  <div class="mb-8 transition-colors duration-200">
+    <h1 class="text-3xl font-semibold text-accent mb-2">
+      Pretext Playground
+    </h1>
+    <p class="text-fg-muted text-sm">
+      Measure and layout multiline text without touching the DOM —
+      <a
+        href="https://github.com/chenglou/pretext"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="underline underline-offset-2 hover:text-accent transition-colors"
+      >@chenglou/pretext</a>
+      is 300–600× faster than traditional reflow.
+    </p>
+  </div>
+
+  <div
+    class="w-full rounded-xl border border-border-subtle bg-bg-secondary p-6 sm:p-8 transition-colors duration-200"
+  >
+    <PretextPlayground />
+  </div>
+</BaseLayout>

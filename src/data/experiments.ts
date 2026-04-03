@@ -1,4 +1,11 @@
-export type Category = "maths" | "art" | "music" | "physics" | "code";
+export type Category =
+  | "maths"
+  | "art"
+  | "music"
+  | "physics"
+  | "code"
+  | "UI/UX"
+  | "other";
 
 export interface Sity {
   title: string;
@@ -9,6 +16,13 @@ export interface Sity {
 }
 
 export const sities: Sity[] = [
+  {
+    title: "Pretext Playground",
+    description: "Experiment with the exciting world of Pretext.",
+    href: "/pretext",
+    date: "2026-04-03",
+    categories: ["code", "UI/UX", "art"],
+  },
   {
     title: "Infinite π Scroll",
     description:
